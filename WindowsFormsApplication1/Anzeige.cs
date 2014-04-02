@@ -56,7 +56,7 @@ namespace WindowsFormsApplication1
             if (show)
             {
                 imagesn = 0;
-                images = Directory.GetFiles(@"C:\Users\Daniel Hirschi\Documents\Visual Studio 2010\Projects\EC14Titel\Sponsoren", "*.png");
+                images = Directory.GetFiles(@".\Sponsoren", "*.png");
                 imagesmax = images.Count();
                 pictureBox_Sponsoren.Image = Image.FromFile(images[imagesn]);
                 panel_sponsoren.Visible = true;
