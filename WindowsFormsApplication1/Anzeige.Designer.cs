@@ -81,6 +81,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Image = global::WindowsFormsApplication1.Properties.Resources.Logo_SCEG_4_f;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(643, 21);
@@ -103,6 +104,7 @@
             // 
             // panel_uhr
             // 
+            this.panel_uhr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel_uhr.BackgroundImage = global::WindowsFormsApplication1.Properties.Resources.Zeit;
             this.panel_uhr.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel_uhr.Controls.Add(this.lbl_uhr);
@@ -149,6 +151,7 @@
             // 
             // panelzeit
             // 
+            this.panelzeit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panelzeit.BackColor = System.Drawing.Color.Transparent;
             this.panelzeit.BackgroundImage = global::WindowsFormsApplication1.Properties.Resources.Zeit;
             this.panelzeit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -172,6 +175,7 @@
             // 
             // panel_sponsoren
             // 
+            this.panel_sponsoren.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.panel_sponsoren.Controls.Add(this.label3);
             this.panel_sponsoren.Controls.Add(this.pictureBox_Sponsoren);
             this.panel_sponsoren.Location = new System.Drawing.Point(181, 481);
@@ -192,6 +196,7 @@
             // 
             // panel_status
             // 
+            this.panel_status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel_status.BackColor = System.Drawing.Color.Transparent;
             this.panel_status.BackgroundImage = global::WindowsFormsApplication1.Properties.Resources.Zeit;
             this.panel_status.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -229,6 +234,7 @@
             // 
             // panel_disziplin
             // 
+            this.panel_disziplin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel_disziplin.BackColor = System.Drawing.Color.Transparent;
             this.panel_disziplin.BackgroundImage = global::WindowsFormsApplication1.Properties.Resources.Zeit;
             this.panel_disziplin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
