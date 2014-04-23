@@ -242,7 +242,7 @@
             this.button9.TabIndex = 30;
             this.button9.Text = "+";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.button9.Click += new System.EventHandler(this.but_Lauf_p_Click);
             // 
             // but_Lauf_p
             // 
@@ -659,10 +659,10 @@
             this.groupBox5.Controls.Add(this.label12);
             this.groupBox5.Location = new System.Drawing.Point(35, 640);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(446, 111);
+            this.groupBox5.Size = new System.Drawing.Size(446, 78);
             this.groupBox5.TabIndex = 3;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Uhr";
+            this.groupBox5.Text = "Remark";
             // 
             // butRemark
             // 
@@ -696,7 +696,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(522, 778);
+            this.ClientSize = new System.Drawing.Size(522, 733);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
