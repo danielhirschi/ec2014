@@ -15,6 +15,49 @@ namespace WindowsFormsApplication1
     
     public partial class Anzeige : Form
     {
+        #region Properties
+       
+        public bool ShowLogo
+        {
+            get { return pictureBox1.Visible; }
+            set { pictureBox1.Visible = value; }
+        }
+        public bool ShowUhr
+        {
+            get { return panel_uhr.Visible; }
+            set { panel_uhr.Visible = value; }
+        }
+        public bool ShowZeit 
+        { 
+            get { return panelzeit.Visible; } 
+            set { panelzeit.Visible = value; } 
+        }
+
+        public bool IsShowSponsoren()
+        {
+            return timersponsoren.Enabled;
+        }
+
+        public bool ShowStatus
+        {
+            get { return panel_status.Visible; }
+            set { panel_status.Visible = value; }
+        }
+
+        public bool ShowDisziplin
+        {
+            get { return panel_disziplin.Visible; }
+            set { panel_disziplin.Visible = value; }
+        }
+
+        public bool ShowRemark
+        {
+            get { return lblRemark.Visible; }
+            set { lblRemark.Visible = value; }
+        }
+
+        #endregion
+
         public Anzeige()
         {
             InitializeComponent();
@@ -24,34 +67,11 @@ namespace WindowsFormsApplication1
 
 
 
-        //Logo
-        public bool isshowlogo = true;
-        public void ShowLogo(bool show)
-        {
-            this.pictureBox1.Visible = show;
-            isshowlogo = show;
-
-        }
-
-        //Uhr
-        public bool isshowuhr = true;
-        public void Showuhr(bool show)
-        {
-            this.panel_uhr.Visible = show;
-            isshowuhr = show;
-        }
-
-        public void uhraktualisieren(String zeit)
-        {
-            this.lbl_uhr.Text = zeit;
-        }
-
-
         //Sponsoren
         string[] images;
         int imagesn;
         int imagesmax;
-        public void showsponsoren(bool show, int interval)
+        public void ShowSponsoren(bool show, int interval)
         {
             if (show)
             {
@@ -72,7 +92,6 @@ namespace WindowsFormsApplication1
 
         private void timersponsoren_Tick(object sender, EventArgs e)
         {
-            
             imagesn = imagesn + 1;
             if (imagesn >= imagesmax)
             {
@@ -85,45 +104,39 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public bool IsShowsponsoren()
+        //Uhr
+        public void SetUhr(String zeit)
         {
-            return timersponsoren.Enabled;
+            this.lbl_uhr.Text = zeit;
         }
 
         //zeit
-        public bool isshowzeit = true;
-        public void Showzeit(bool show)
-        {
-            panelzeit.Visible = true;
-        }
-        public void zeitübergeben(string zeit)
+        public void SetZeit(string zeit)
         {
             lbl_Zeit.Text = zeit;
         }
 
         //Status
-        public bool isshowstatus = true;
-        public void showstatus(bool show)
+
+        public void SetRennen(string rennen)
         {
-            panel_status.Visible = show;
-            panel_disziplin.Visible = show;
-            isshowstatus = show;
+            lbl_rennen.Text = rennen;
         }
-        public void rennen(string rennen)
+        public void SetLauf(string lauf)
         {
-            lbl_rennen.Text = rennen.ToString();
+            lbl_lauf.Text = lauf;
         }
-        public void lauf(string lauf)
+        public void SetDisziplin(string disziplin)
         {
-            lbl_lauf.Text = lauf.ToString();
+            label_disziplin.Text = disziplin;
         }
-        public void disziplin(string disziplin)
+        public void SetRemark(string remark)
         {
-            label_disziplin.Text = disziplin.ToString();
+            lblRemark.Text = remark;
         }
 
         //Zwischenzeit
-        public void zwischenzeitsetzen(string zwischenzeit,int rang)
+        public void SetZwischenzeitsetzen(string zwischenzeit,int rang)
         {
             if (rang < 9)
             {
@@ -148,8 +161,6 @@ namespace WindowsFormsApplication1
                 pan.Visible = false;
             }
             timerzwischenzeit.Stop();
-
-
         }
     }
 }

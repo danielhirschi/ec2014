@@ -12,14 +12,15 @@ using SCEG.ScoreboardPc.Data;
 
 namespace SCEG.ScoreboardPc.View
 {
-  
+    
+
     public partial class Scoreboard : Form
     {
         private readonly ViewController ctrl;
         private readonly Timer commandTimer;
-        private List<TextBox> txtTime;
-        private List<TextBox> txtRang;
-        private List<TextBox> txtBahn;
+        private readonly List<TextBox> txtTime;
+        private readonly List<TextBox> txtRang;
+        private readonly List<TextBox> txtBahn;
         private const int AnzahlBahnen = 8;
 
         public Scoreboard()
@@ -52,41 +53,14 @@ namespace SCEG.ScoreboardPc.View
             commandTimer.Start();
 
             //als Array abfüllen
-            txtTime = new List<TextBox>();
-            txtTime.Add(txtTime1);
-            txtTime.Add(txtTime2);
-            txtTime.Add(txtTime3);
-            txtTime.Add(txtTime4);
-            txtTime.Add(txtTime5);
-            txtTime.Add(txtTime6);
-            txtTime.Add(txtTime7);
-            txtTime.Add(txtTime8);
+            txtTime = new List<TextBox> {txtTime1, txtTime2, txtTime3, txtTime4, txtTime5, txtTime6, txtTime7, txtTime8};
 
-            txtRang = new List<TextBox>();
-            txtRang.Add(txtRang1);
-            txtRang.Add(txtRang2);
-            txtRang.Add(txtRang3);
-            txtRang.Add(txtRang4);
-            txtRang.Add(txtRang5);
-            txtRang.Add(txtRang6);
-            txtRang.Add(txtRang7);
-            txtRang.Add(txtRang8);
+            txtRang = new List<TextBox> {txtRang1, txtRang2, txtRang3, txtRang4, txtRang5, txtRang6, txtRang7, txtRang8};
 
-            txtBahn = new List<TextBox>();
-            txtBahn.Add(txtBahn1);
-            txtBahn.Add(txtBahn2);
-            txtBahn.Add(txtBahn3);
-            txtBahn.Add(txtBahn4);
-            txtBahn.Add(txtBahn5);
-            txtBahn.Add(txtBahn6);
-            txtBahn.Add(txtBahn7);
-            txtBahn.Add(txtBahn8);
-
+            txtBahn = new List<TextBox> {txtBahn1, txtBahn2, txtBahn3, txtBahn4, txtBahn5, txtBahn6, txtBahn7, txtBahn8};
 
 
             // Button freigeben/sperren
-            butFTPAutoStop.Enabled = false;
-            butFTPAutoStart.Enabled = true;
             butOpenPort.Enabled = true;
             butClosePort.Enabled = false;
         }
@@ -103,6 +77,7 @@ namespace SCEG.ScoreboardPc.View
                 if (ctrl.CommandsWorkload.TryDequeue(out command))
                 {
                     InterPretCommand(command);
+                    OnAresCommandIcoming(command);
                 }
             }
             commandTimer.Start();
@@ -139,26 +114,18 @@ namespace SCEG.ScoreboardPc.View
                     var spec = (BahnInfo)command;
                     if (spec.Rang <= AnzahlBahnen)
                     {
-                        //if (spec.Rang > 0 && spec.BahnNr == 0 && spec.Loeschen)
-                        //{
-                        //    txtAktuelleZeit.Text = String.Format("{0:hh\\:mm\\:ss\\:f}", new TimeSpan());
-                        //    ClearScoreboard();
-                        //}
-                        //else if (spec.Rang > 0)
-                        //{
-                            if (spec.Loeschen)
-                            {
-                                txtTime[spec.Rang - 1].Text = String.Empty;
-                                txtRang[spec.Rang - 1].Text = String.Empty;
-                                txtBahn[spec.Rang - 1].Text = String.Empty;
-                            }
-                            else
-                            {
-                                txtTime[spec.Rang - 1].Text = String.Format("{0:hh\\:mm\\:ss\\:ff}", spec.Time);
-                                txtRang[spec.Rang - 1].Text = spec.Rang.ToString();
-                                txtBahn[spec.Rang - 1].Text = spec.BahnNr.ToString();
-                            }
-                        //}
+                        if (spec.Loeschen)
+                        {
+                            txtTime[spec.Rang - 1].Text = String.Empty;
+                            txtRang[spec.Rang - 1].Text = String.Empty;
+                            txtBahn[spec.Rang - 1].Text = String.Empty;
+                        }
+                        else
+                        {
+                            txtTime[spec.Rang - 1].Text = String.Format("{0:hh\\:mm\\:ss\\:ff}", spec.Time);
+                            txtRang[spec.Rang - 1].Text = spec.Rang.ToString();
+                            txtBahn[spec.Rang - 1].Text = spec.BahnNr.ToString();
+                        }
                     }
                 }
             }
@@ -212,72 +179,13 @@ namespace SCEG.ScoreboardPc.View
 
 
 
+        public delegate void AresCommandEventHandler(object sender, AresCommand aresCommand);
+        public event AresCommandEventHandler AresCommandIcoming;
 
-
-
-        #region FTP
-
-        private void butFTPAutoStart_Click(object sender, EventArgs e)
+        public virtual void OnAresCommandIcoming(AresCommand aresCommand)
         {
-            ctrl.FtpAutoUpload = true;
-            butFTPAutoStop.Enabled = true;
-            butFTPAutoStart.Enabled = false;
+            if (AresCommandIcoming != null)
+                AresCommandIcoming(this, aresCommand);
         }
-
-        private void butFTPAutoStop_Click(object sender, EventArgs e)
-        {
-            ctrl.FtpAutoUpload = false;
-            butFTPAutoStop.Enabled = false;
-            butFTPAutoStart.Enabled = true;
-        }
-
-        private void butManUpload_Click(object sender, EventArgs e)
-        {
-            ctrl.FtpUpload();
-        }
-
-
-        /// <summary>
-        /// Konfigurationsdaten laden
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void butFtpConfigLoad_Click(object sender, EventArgs e)
-        {
-            ctrl.LoadFtpConfig();
-            if (ctrl.CurrentFtpConfig != null)
-            {
-                txtFtpServer.Text = ctrl.CurrentFtpConfig.FTPServer;
-                txtFtpPath.Text = ctrl.CurrentFtpConfig.FTPPath;
-                txtFtpFile.Text = ctrl.CurrentFtpConfig.FTPFile;
-                txtFtpUser.Text = ctrl.CurrentFtpConfig.FTPUser;
-                txtFtpPassword.Text = ctrl.CurrentFtpConfig.FTPPassword;
-                txtFtpConfigStatus.Text = "Config load successfully";
-            }
-            else
-            {
-                txtFtpConfigStatus.Text = "Config does not exists";
-            }
-        }
-
-        /// <summary>
-        /// Konfigurationsdaten abspeichern
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void butFTPConfigSave_Click(object sender, EventArgs e)
-        {
-            ctrl.CurrentFtpConfig.FTPServer = txtFtpServer.Text;
-            ctrl.CurrentFtpConfig.FTPPath = txtFtpPath.Text;
-            ctrl.CurrentFtpConfig.FTPFile = txtFtpFile.Text;
-            ctrl.CurrentFtpConfig.FTPUser = txtFtpUser.Text;
-            ctrl.CurrentFtpConfig.FTPPassword = txtFtpPassword.Text;
-            ctrl.SaveFtpConfig();
-            txtFtpConfigStatus.Text = "Config save successfully";
-        }
-
-        #endregion
-
-
     }
 }

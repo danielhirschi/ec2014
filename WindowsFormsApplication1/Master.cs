@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using SCEG.ScoreboardPc.Data;
+using SCEG.ScoreboardPc.View;
 
 namespace WindowsFormsApplication1
 {
@@ -14,25 +16,30 @@ namespace WindowsFormsApplication1
         //Original Logo Grösse = 1181;1207
         //Farbe Logo 0;94;157
         Anzeige FormAnzeige = new Anzeige();
-        TimeSpan zeit = new TimeSpan(0);
-        int rang = 1;
+        Scoreboard FormScoreboard = new Scoreboard();
+
+        protected TimeSpan Zeit { get; set; }
+        protected int Rang { get; set; }
+        protected bool IsBindWithScoreboard { get; set; }
 
         public Master()
         {
             InitializeComponent();
-            
+            Zeit = new TimeSpan(0);
+            Rang = 1;
+            IsBindWithScoreboard = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (FormAnzeige.isshowlogo)
+            if (FormAnzeige.ShowLogo)
             {
-                FormAnzeige.ShowLogo(false);
+                FormAnzeige.ShowLogo = false; 
                 bu_Logo.Text = "Logo einblenden";
             }
             else
             {
-                FormAnzeige.ShowLogo(true);
+                FormAnzeige.ShowLogo = true;
                 bu_Logo.Text = "Logo ausblenden";
             }
 
@@ -41,8 +48,9 @@ namespace WindowsFormsApplication1
         private void Master_Load(object sender, EventArgs e)
         {
             FormAnzeige.Show(this);
+            FormScoreboard.Show();
             timeruhr.Start();
-            this.lbl_zeit.Text = zeit.ToString(@"mm\:ss\.f");
+            lbl_zeit.Text = Zeit.ToString(@"mm\:ss\.f");
             txt_lauf_TextChanged(sender, e);
             txt_rennen_TextChanged(sender, e);
             textBox2_TextChanged(sender, e);
@@ -57,7 +65,7 @@ namespace WindowsFormsApplication1
 
         private void lbl_uhr_TextChanged(object sender, EventArgs e)
         {
-            FormAnzeige.uhraktualisieren(this.lbl_uhr.Text);
+            FormAnzeige.SetUhr(lbl_uhr.Text);
         }
 
         private void but_Rennen_p_Click(object sender, EventArgs e)
@@ -82,12 +90,12 @@ namespace WindowsFormsApplication1
 
         private void txt_rennen_TextChanged(object sender, EventArgs e)
         {
-            FormAnzeige.rennen(this.txt_rennen.Text);
+            FormAnzeige.SetRennen(txt_rennen.Text);
         }
 
         private void txt_lauf_TextChanged(object sender, EventArgs e)
         {
-            FormAnzeige.lauf(this.txt_lauf.Text);
+            FormAnzeige.SetLauf(txt_lauf.Text);
         }
 
         private void but_zeit_Click(object sender, EventArgs e)
@@ -103,8 +111,8 @@ namespace WindowsFormsApplication1
 
         private void timerzeit_Tick(object sender, EventArgs e)
         {
-            zeit = zeit + new TimeSpan(0,0,0,0,100);
-            this.lbl_zeit.Text = zeit.ToString(@"mm\:ss\.f");
+            Zeit = Zeit + new TimeSpan(0,0,0,0,100);
+            lbl_zeit.Text = Zeit.ToString(@"mm\:ss\.f");
         }
 
 
@@ -112,14 +120,14 @@ namespace WindowsFormsApplication1
         // Sponsoren
         private void but_sponsoren_Click(object sender, EventArgs e)
         {
-            if (FormAnzeige.IsShowsponsoren())
+            if (FormAnzeige.IsShowSponsoren())
             {
-                FormAnzeige.showsponsoren(false, int.Parse(textBox_sponor_interval.Text));
+                FormAnzeige.ShowSponsoren(false, int.Parse(textBox_sponor_interval.Text));
                 but_sponsoren.Text = "Sponsoren Anzeigen";
             }
             else
             {
-                FormAnzeige.showsponsoren(true, int.Parse(textBox_sponor_interval.Text));
+                FormAnzeige.ShowSponsoren(true, int.Parse(textBox_sponor_interval.Text));
                 but_sponsoren.Text = "Sponsoren Stoppen";
             }
         }
@@ -131,21 +139,21 @@ namespace WindowsFormsApplication1
         private void button1_Click_1(object sender, EventArgs e)
         {
             TimeSpan aktuellezeit = new TimeSpan();
-            aktuellezeit = zeit;
-            zwischenzeit(zeit, 1);
+            aktuellezeit = Zeit;
+            AktualisiereZwischenzeit(Zeit, 1);
         }
 
-        private void zwischenzeit(TimeSpan zwischenzeit, int bahn)
+        private void AktualisiereZwischenzeit(TimeSpan zwischenzeit, int bahn)
         {
 
-            Label lbl = (Label)this.groupBox1.Controls["label_r" + rang];
+            Label lbl = (Label)groupBox1.Controls["label_r" + Rang];
             lbl.Text = bahn.ToString() + "   " + zwischenzeit.ToString(@"mm\:ss\.f");
-            FormAnzeige.zwischenzeitsetzen(lbl.Text, rang);
-            rang = rang + 1;
-            if (rang == 9)
+            FormAnzeige.SetZwischenzeitsetzen(lbl.Text, Rang);
+            Rang = Rang + 1;
+            if (Rang == 9)
             {
-                FormAnzeige.zwischenzeitsetzen(" ", rang);
-                rang = 1;
+                FormAnzeige.SetZwischenzeitsetzen(" ", Rang);
+                Rang = 1;
                 
             }
 
@@ -154,50 +162,50 @@ namespace WindowsFormsApplication1
         private void button2_Click(object sender, EventArgs e)
         {
             TimeSpan aktuellezeit = new TimeSpan();
-            aktuellezeit = zeit;
-            zwischenzeit(zeit, 2);
+            aktuellezeit = Zeit;
+            AktualisiereZwischenzeit(Zeit, 2);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             TimeSpan aktuellezeit = new TimeSpan();
-            aktuellezeit = zeit;
-            zwischenzeit(zeit, 3);
+            aktuellezeit = Zeit;
+            AktualisiereZwischenzeit(Zeit, 3);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             TimeSpan aktuellezeit = new TimeSpan();
-            aktuellezeit = zeit;
-            zwischenzeit(zeit, 4);
+            aktuellezeit =Zeit;
+            AktualisiereZwischenzeit(Zeit, 4);
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
             TimeSpan aktuellezeit = new TimeSpan();
-            aktuellezeit = zeit;
-            zwischenzeit(zeit, 5);
+            aktuellezeit = Zeit;
+            AktualisiereZwischenzeit(Zeit, 5);
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
             TimeSpan aktuellezeit = new TimeSpan();
-            aktuellezeit = zeit;
-            zwischenzeit(zeit, 6);
+            aktuellezeit = Zeit;
+            AktualisiereZwischenzeit(Zeit, 6);
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             TimeSpan aktuellezeit = new TimeSpan();
-            aktuellezeit = zeit;
-            zwischenzeit(zeit, 7);
+            aktuellezeit = Zeit;
+            AktualisiereZwischenzeit(Zeit, 7);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             TimeSpan aktuellezeit = new TimeSpan();
-            aktuellezeit = zeit;
-            zwischenzeit(zeit, 8);
+            aktuellezeit = Zeit;
+            AktualisiereZwischenzeit(Zeit, 8);
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -208,34 +216,33 @@ namespace WindowsFormsApplication1
         private void button10_Click(object sender, EventArgs e)
         {
             timerzeit.Stop();
-            zeit = new TimeSpan(0);
+            Zeit = new TimeSpan(0);
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            if (FormAnzeige.isshowuhr)
+            if (FormAnzeige.ShowUhr)
             {
-                FormAnzeige.Showuhr(false);
+                FormAnzeige.ShowUhr = false;
                 button11.Text = "Uhr einblenden";
             }
             else
             {
-                FormAnzeige.Showuhr(true);
+                FormAnzeige.ShowUhr = true;
                 button11.Text = "Uhr ausblenden";
             }
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
-            if (FormAnzeige.isshowstatus)
+            if (FormAnzeige.ShowStatus)
             {
-                FormAnzeige.showstatus(false);
+                FormAnzeige.ShowStatus = false;
                 button12.Text = "Status einblenden";
-
             }
             else
             {
-                FormAnzeige.showstatus(true);
+                FormAnzeige.ShowStatus = true;
                 button12.Text = "Status ausblenden";
             }
             
@@ -244,27 +251,84 @@ namespace WindowsFormsApplication1
 
         private void lbl_zeit_TextChanged(object sender, EventArgs e)
         {
-            FormAnzeige.zeitübergeben(lbl_zeit.Text);
+            FormAnzeige.SetZeit(lbl_zeit.Text);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            FormAnzeige.disziplin(textBox2.Text);
+            FormAnzeige.SetDisziplin(textBox2.Text);
         }
 
         private void timerstatus_Tick(object sender, EventArgs e)
         {
-            FormAnzeige.showstatus(false);
+            FormAnzeige.ShowStatus = false;
             timerstatus.Stop();
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
-            FormAnzeige.showstatus(true);
-            zeit = new TimeSpan(0);
-            this.lbl_zeit.Text = zeit.ToString(@"mm\:ss\.f");
+            FormAnzeige.ShowStatus = true;
+            Zeit = new TimeSpan(0);
+            lbl_zeit.Text = Zeit.ToString(@"mm\:ss\.f");
         }
 
+        private void butBindWithScoreboard_Click(object sender, EventArgs e)
+        {
+            if (FormScoreboard == null || FormScoreboard.IsDisposed) return;
+            if (IsBindWithScoreboard)
+            {
+                FormScoreboard.AresCommandIcoming -= FormScoreboardOnAresCommandIcoming;
+                IsBindWithScoreboard = false;
+                butBindWithScoreboard.Text = "Mit scoreboard binden";
+            }
+            else
+            {
+                FormScoreboard.AresCommandIcoming += FormScoreboardOnAresCommandIcoming;
+                IsBindWithScoreboard = true;
+                butBindWithScoreboard.Text = "Mit scoreboard trennen";
+                
+            }
+        }
 
+        private void FormScoreboardOnAresCommandIcoming(object sender, AresCommand aresCommand)
+        {
+            
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (FormAnzeige.ShowDisziplin)
+            {
+                FormAnzeige.ShowDisziplin = false;
+                button14.Text = "Disziplin einblenden";
+            }
+            else
+            {
+                FormAnzeige.ShowDisziplin = true;
+                button14.Text = "Disziplin ausblenden";
+            }
+        }
+
+        private void txtRemark_TextChanged(object sender, EventArgs e)
+        {
+            FormAnzeige.SetRemark(txtRemark.Text);
+        }
+
+        private void butRemark_Click(object sender, EventArgs e)
+        {
+            if (FormAnzeige.ShowRemark)
+            {
+                FormAnzeige.ShowRemark = false;
+                butRemark.Text = "Remark einblenden";
+            }
+            else
+            {
+                txtRemark_TextChanged(sender, e);
+                FormAnzeige.ShowRemark = true;
+                butRemark.Text = "Remark ausblenden";
+            }
+        }
+
+ 
     }
 }

@@ -62,6 +62,7 @@
             this.panel_rang8 = new System.Windows.Forms.Panel();
             this.lbl_rang8 = new System.Windows.Forms.Label();
             this.timerzwischenzeit = new System.Windows.Forms.Timer(this.components);
+            this.lblRemark = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel_uhr.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Sponsoren)).BeginInit();
@@ -84,7 +85,7 @@
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Image = global::WindowsFormsApplication1.Properties.Resources.Logo_SCEG_4_f;
             this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(643, 21);
+            this.pictureBox1.Location = new System.Drawing.Point(647, 21);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(118, 120);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -108,7 +109,7 @@
             this.panel_uhr.BackgroundImage = global::WindowsFormsApplication1.Properties.Resources.Zeit;
             this.panel_uhr.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel_uhr.Controls.Add(this.lbl_uhr);
-            this.panel_uhr.Location = new System.Drawing.Point(668, 142);
+            this.panel_uhr.Location = new System.Drawing.Point(672, 142);
             this.panel_uhr.Name = "panel_uhr";
             this.panel_uhr.Size = new System.Drawing.Size(75, 37);
             this.panel_uhr.TabIndex = 2;
@@ -156,7 +157,7 @@
             this.panelzeit.BackgroundImage = global::WindowsFormsApplication1.Properties.Resources.Zeit;
             this.panelzeit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panelzeit.Controls.Add(this.lbl_Zeit);
-            this.panelzeit.Location = new System.Drawing.Point(561, 504);
+            this.panelzeit.Location = new System.Drawing.Point(565, 476);
             this.panelzeit.Name = "panelzeit";
             this.panelzeit.Size = new System.Drawing.Size(200, 38);
             this.panelzeit.TabIndex = 7;
@@ -178,7 +179,7 @@
             this.panel_sponsoren.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.panel_sponsoren.Controls.Add(this.label3);
             this.panel_sponsoren.Controls.Add(this.pictureBox_Sponsoren);
-            this.panel_sponsoren.Location = new System.Drawing.Point(181, 481);
+            this.panel_sponsoren.Location = new System.Drawing.Point(183, 453);
             this.panel_sponsoren.Name = "panel_sponsoren";
             this.panel_sponsoren.Size = new System.Drawing.Size(360, 137);
             this.panel_sponsoren.TabIndex = 8;
@@ -204,7 +205,7 @@
             this.panel_status.Controls.Add(this.label2);
             this.panel_status.Controls.Add(this.label1);
             this.panel_status.Controls.Add(this.lbl_rennen);
-            this.panel_status.Location = new System.Drawing.Point(561, 469);
+            this.panel_status.Location = new System.Drawing.Point(565, 441);
             this.panel_status.Margin = new System.Windows.Forms.Padding(0);
             this.panel_status.Name = "panel_status";
             this.panel_status.Size = new System.Drawing.Size(200, 38);
@@ -239,7 +240,7 @@
             this.panel_disziplin.BackgroundImage = global::WindowsFormsApplication1.Properties.Resources.Zeit;
             this.panel_disziplin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel_disziplin.Controls.Add(this.label_disziplin);
-            this.panel_disziplin.Location = new System.Drawing.Point(561, 539);
+            this.panel_disziplin.Location = new System.Drawing.Point(565, 511);
             this.panel_disziplin.Margin = new System.Windows.Forms.Padding(0);
             this.panel_disziplin.Name = "panel_disziplin";
             this.panel_disziplin.Size = new System.Drawing.Size(200, 38);
@@ -453,12 +454,24 @@
             this.timerzwischenzeit.Interval = 5000;
             this.timerzwischenzeit.Tick += new System.EventHandler(this.timerzwischenzeit_Tick);
             // 
+            // lblRemark
+            // 
+            this.lblRemark.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblRemark.Location = new System.Drawing.Point(19, 598);
+            this.lblRemark.Name = "lblRemark";
+            this.lblRemark.Size = new System.Drawing.Size(763, 23);
+            this.lblRemark.TabIndex = 16;
+            this.lblRemark.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblRemark.Visible = false;
+            // 
             // Anzeige
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Lime;
-            this.ClientSize = new System.Drawing.Size(790, 630);
+            this.ClientSize = new System.Drawing.Size(794, 620);
+            this.Controls.Add(this.lblRemark);
             this.Controls.Add(this.panel_rang8);
             this.Controls.Add(this.panel_rang7);
             this.Controls.Add(this.panel_rang6);
@@ -541,6 +554,7 @@
         private System.Windows.Forms.Panel panel_rang8;
         private System.Windows.Forms.Label lbl_rang8;
         private System.Windows.Forms.Timer timerzwischenzeit;
+        private System.Windows.Forms.Label lblRemark;
 
     }
 }

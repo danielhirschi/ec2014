@@ -30,13 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.bu_Logo = new System.Windows.Forms.Button();
-            this.lbl_uhr = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button13 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.textBox_statusdauer = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.button14 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
@@ -76,6 +76,7 @@
             this.lbl_rennen = new System.Windows.Forms.Label();
             this.timerzeit = new System.Windows.Forms.Timer(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lbl_uhr = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox_sponor_interval = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -83,9 +84,17 @@
             this.button11 = new System.Windows.Forms.Button();
             this.timeruhr = new System.Windows.Forms.Timer(this.components);
             this.timerstatus = new System.Windows.Forms.Timer(this.components);
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.butBindWithScoreboard = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.butRemark = new System.Windows.Forms.Button();
+            this.txtRemark = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // bu_Logo
@@ -98,17 +107,6 @@
             this.bu_Logo.UseVisualStyleBackColor = true;
             this.bu_Logo.Click += new System.EventHandler(this.button1_Click);
             // 
-            // lbl_uhr
-            // 
-            this.lbl_uhr.AutoSize = true;
-            this.lbl_uhr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_uhr.Location = new System.Drawing.Point(72, 35);
-            this.lbl_uhr.Name = "lbl_uhr";
-            this.lbl_uhr.Size = new System.Drawing.Size(63, 20);
-            this.lbl_uhr.TabIndex = 1;
-            this.lbl_uhr.Text = "lbl_uhr";
-            this.lbl_uhr.TextChanged += new System.EventHandler(this.lbl_uhr_TextChanged);
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.button13);
@@ -116,6 +114,7 @@
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.textBox_statusdauer);
             this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.button14);
             this.groupBox1.Controls.Add(this.button12);
             this.groupBox1.Controls.Add(this.button10);
             this.groupBox1.Controls.Add(this.button9);
@@ -204,6 +203,16 @@
             this.label10.Size = new System.Drawing.Size(97, 13);
             this.label10.TabIndex = 33;
             this.label10.Text = "Anzeigedauer [ms]:";
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(220, 86);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(203, 22);
+            this.button14.TabIndex = 32;
+            this.button14.Text = "Disziplin ausblenden";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // button12
             // 
@@ -554,6 +563,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Uhr";
             // 
+            // lbl_uhr
+            // 
+            this.lbl_uhr.AutoSize = true;
+            this.lbl_uhr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_uhr.Location = new System.Drawing.Point(72, 35);
+            this.lbl_uhr.Name = "lbl_uhr";
+            this.lbl_uhr.Size = new System.Drawing.Size(63, 20);
+            this.lbl_uhr.TabIndex = 1;
+            this.lbl_uhr.Text = "lbl_uhr";
+            this.lbl_uhr.TextChanged += new System.EventHandler(this.lbl_uhr_TextChanged);
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.textBox_sponor_interval);
@@ -612,13 +632,75 @@
             // 
             this.timerstatus.Tick += new System.EventHandler(this.timerstatus_Tick);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.butBindWithScoreboard);
+            this.groupBox4.Location = new System.Drawing.Point(264, 534);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(212, 84);
+            this.groupBox4.TabIndex = 4;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Sponsoren";
+            // 
+            // butBindWithScoreboard
+            // 
+            this.butBindWithScoreboard.Location = new System.Drawing.Point(16, 19);
+            this.butBindWithScoreboard.Name = "butBindWithScoreboard";
+            this.butBindWithScoreboard.Size = new System.Drawing.Size(190, 37);
+            this.butBindWithScoreboard.TabIndex = 0;
+            this.butBindWithScoreboard.Text = "Mit scoreboard binden";
+            this.butBindWithScoreboard.UseVisualStyleBackColor = true;
+            this.butBindWithScoreboard.Click += new System.EventHandler(this.butBindWithScoreboard_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.butRemark);
+            this.groupBox5.Controls.Add(this.txtRemark);
+            this.groupBox5.Controls.Add(this.label12);
+            this.groupBox5.Location = new System.Drawing.Point(35, 640);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(446, 111);
+            this.groupBox5.TabIndex = 3;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Uhr";
+            // 
+            // butRemark
+            // 
+            this.butRemark.Location = new System.Drawing.Point(229, 15);
+            this.butRemark.Name = "butRemark";
+            this.butRemark.Size = new System.Drawing.Size(203, 22);
+            this.butRemark.TabIndex = 32;
+            this.butRemark.Text = "Remark einblenden";
+            this.butRemark.UseVisualStyleBackColor = true;
+            this.butRemark.Click += new System.EventHandler(this.butRemark_Click);
+            // 
+            // txtRemark
+            // 
+            this.txtRemark.Location = new System.Drawing.Point(6, 47);
+            this.txtRemark.Name = "txtRemark";
+            this.txtRemark.Size = new System.Drawing.Size(431, 20);
+            this.txtRemark.TabIndex = 36;
+            this.txtRemark.Text = "Alle angaben ohne gewähr";
+            this.txtRemark.TextChanged += new System.EventHandler(this.txtRemark_TextChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 24);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(44, 13);
+            this.label12.TabIndex = 35;
+            this.label12.Text = "Remark";
+            // 
             // Master
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 630);
+            this.ClientSize = new System.Drawing.Size(522, 778);
             this.Controls.Add(this.button11);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.bu_Logo);
@@ -631,6 +713,9 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -638,7 +723,6 @@
         #endregion
 
         private System.Windows.Forms.Button bu_Logo;
-        private System.Windows.Forms.Label lbl_uhr;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lbl_rennen;
         private System.Windows.Forms.TextBox txt_lauf;
@@ -691,6 +775,14 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Timer timerstatus;
         private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button butBindWithScoreboard;
+        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.Label lbl_uhr;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button butRemark;
+        private System.Windows.Forms.TextBox txtRemark;
+        private System.Windows.Forms.Label label12;
     }
 }
 

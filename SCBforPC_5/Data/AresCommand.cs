@@ -6,7 +6,7 @@ using SCEG.ScoreboardPc.Business;
 
 namespace SCEG.ScoreboardPc.Data
 {
-    abstract class AresCommand
+    public abstract class AresCommand
     {
         private readonly List<byte> fullAresCommand;
 

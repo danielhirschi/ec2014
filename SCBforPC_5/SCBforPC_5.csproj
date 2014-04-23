@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\AresCommandFactory.cs" />
-    <Compile Include="Business\FTPServerHandler.cs" />
     <Compile Include="Business\ViewController.cs" />
     <Compile Include="Data\AktuelleZeit.cs" />
     <Compile Include="Data\AresCommand.cs" />
