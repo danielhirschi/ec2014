@@ -107,7 +107,7 @@ namespace WindowsFormsApplication1
         //Uhr
         public void SetUhr(String zeit)
         {
-            this.lbl_uhr.Text = zeit;
+            lbl_uhr.Text = zeit;
         }
 
         //zeit
