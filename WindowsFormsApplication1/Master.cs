@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -21,12 +22,14 @@ namespace WindowsFormsApplication1
         protected DateTime? StartZeit { get; set; }
         protected int Rang { get; set; }
         protected bool IsBindWithScoreboard { get; set; }
+        public int AnzahlBahnen { get; set; }
 
         public Master()
         {
             InitializeComponent();
             StartZeit = null;
             Rang = 1;
+            AnzahlBahnen = 8;
             IsBindWithScoreboard = false;
             
         }
@@ -260,7 +263,37 @@ namespace WindowsFormsApplication1
 
         private void FormScoreboardOnAresCommandIcoming(object sender, AresCommand aresCommand)
         {
-            
+            if (aresCommand is AktuelleZeit)
+            {
+                FormAnzeige.SetZeit(String.Format("{0:mm\\:ss\\:f}", (aresCommand as AktuelleZeit).Time));
+            }
+            else if (aresCommand is NeuerWettkampf)
+            {
+                FormAnzeige.SetZeit(String.Format("{0:mm\\:ss\\:f}", new TimeSpan()));
+            }
+            else if (aresCommand is RennenUndLauf)
+            {
+                var com = (RennenUndLauf)aresCommand;
+                FormAnzeige.SetRennen(com.RennenNr.ToString(CultureInfo.CurrentUICulture));
+                FormAnzeige.SetLauf(com.LaufNr.ToString(CultureInfo.CurrentUICulture));
+            }
+            else if (aresCommand is BahnInfo)
+            {
+                var spec = (BahnInfo)aresCommand;
+
+                if (spec.Rang <= AnzahlBahnen)
+                {
+                    if (spec.Loeschen)
+                    {
+                        FormAnzeige.DeleteZwischenzeit(spec.Rang);
+                    }
+                    else
+                    {
+                        FormAnzeige.SetZwischenzeitsetzen(spec.BahnNr.ToString(CultureInfo.CurrentCulture) + " " + String.Format("{0:hh\\:mm\\:ss\\:ff}", spec.Time), spec.Rang);
+                    }
+                }
+            }
+
         }
 
         private void button14_Click(object sender, EventArgs e)

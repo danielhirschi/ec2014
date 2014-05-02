@@ -58,12 +58,14 @@ namespace WindowsFormsApplication1
 
         public TimeSpan ZwischenZeitAnzeigedauer { get; set; }
         public DateTime LetzteZwischenzeitGezeigt { get; private set; }
+        public int AnzahlBahnen { get; set; }
 
         #endregion
 
         public Anzeige()
         {
             InitializeComponent();
+            AnzahlBahnen = 8;
             ZwischenZeitAnzeigedauer = new TimeSpan(0,0,0,10); 
             timerzwischenzeit.Start();
         }
@@ -110,7 +112,7 @@ namespace WindowsFormsApplication1
         }
 
         //Uhr
-        public void SetUhr(String zeit)
+        public void SetUhr(string zeit)
         {
             lbl_uhr.Text = zeit;
         }
@@ -144,23 +146,30 @@ namespace WindowsFormsApplication1
         
         public void SetZwischenzeitsetzen(string zwischenzeit,int rang)
         {
-            if (rang > 8 || rang < 0) return;
+            if (rang > AnzahlBahnen || rang < 0) return;
 
             LetzteZwischenzeitGezeigt = DateTime.Now;
-            Label lbl = (Label)this.Controls["panel_rang" + rang].Controls["lbl_rang" + rang];
+            Label lbl = (Label)Controls["panel_rang" + rang].Controls["lbl_rang" + rang];
             lbl.Text = zwischenzeit;
-            Panel pan = (Panel)this.Controls["panel_rang" + rang];
+            Panel pan = (Panel)Controls["panel_rang" + rang];
             pan.Visible = true;
+        }
+
+        public void DeleteZwischenzeit(int rang)
+        {
+            if (rang > AnzahlBahnen || rang < 0) return;
+
+            Panel pan = (Panel)Controls["panel_rang" + rang];
+            pan.Visible = false;
         }
 
         private void timerzwischenzeit_Tick(object sender, EventArgs e)
         {
             if (LetzteZwischenzeitGezeigt + ZwischenZeitAnzeigedauer < DateTime.Now)
             {
-                for (int i = 1; i <= 8; i++)
+                for (int i = 1; i <= AnzahlBahnen; i++)
                 {
-                    Panel pan = (Panel)this.Controls["panel_rang" + i];
-                    pan.Visible = false;
+                    DeleteZwischenzeit(i);
                 }
             }
         }

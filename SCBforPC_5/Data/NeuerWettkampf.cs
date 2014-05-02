@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SCEG.ScoreboardPc.Data
 {
-    class NeuerWettkampf : AresCommand
+    public class NeuerWettkampf : AresCommand
     {
         private const byte NeuerWettkampferkkenungsByte = 0x53;
 

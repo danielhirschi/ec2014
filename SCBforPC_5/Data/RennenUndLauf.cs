@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SCEG.ScoreboardPc.Data
 {
-    class RennenUndLauf : AresCommand
+    public class RennenUndLauf : AresCommand
     {
         private const byte RennenUndLaufErkennungsByte = 0x06;
 

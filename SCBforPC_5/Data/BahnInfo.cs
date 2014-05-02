@@ -6,7 +6,7 @@ using SCEG.ScoreboardPc.Business;
 
 namespace SCEG.ScoreboardPc.Data
 {
-    class BahnInfo : AresCommand
+    public class BahnInfo : AresCommand
     {
         private const byte BahnInfoErkennungsByte = 0x53;
         private const int TotalAnzahlBahnen = 8;

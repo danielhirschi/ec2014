@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SCEG.ScoreboardPc.Data
 {
-    class AktuelleZeit : AresCommand
+    public class AktuelleZeit : AresCommand
     {
         private const byte ZeitErkennungsByte = 0xD2;
 
