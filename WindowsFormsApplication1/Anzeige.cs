@@ -56,11 +56,16 @@ namespace WindowsFormsApplication1
             set { lblRemark.Visible = value; }
         }
 
+        public TimeSpan ZwischenZeitAnzeigedauer { get; set; }
+        public DateTime LetzteZwischenzeitGezeigt { get; private set; }
+
         #endregion
 
         public Anzeige()
         {
             InitializeComponent();
+            ZwischenZeitAnzeigedauer = new TimeSpan(0,0,0,10); 
+            timerzwischenzeit.Start();
         }
 
 
@@ -136,31 +141,28 @@ namespace WindowsFormsApplication1
         }
 
         //Zwischenzeit
+        
         public void SetZwischenzeitsetzen(string zwischenzeit,int rang)
         {
-            if (rang < 9)
-            {
-                Label lbl = (Label)this.Controls["panel_rang" + rang].Controls["lbl_rang" + rang];
-                lbl.Text = zwischenzeit;
-                Panel pan = (Panel)this.Controls["panel_rang" + rang];
-                pan.Visible = true;
-            }
-            else
-            {
-                timerzwischenzeit.Start();
-            }
-            
+            if (rang > 8 || rang < 0) return;
 
+            LetzteZwischenzeitGezeigt = DateTime.Now;
+            Label lbl = (Label)this.Controls["panel_rang" + rang].Controls["lbl_rang" + rang];
+            lbl.Text = zwischenzeit;
+            Panel pan = (Panel)this.Controls["panel_rang" + rang];
+            pan.Visible = true;
         }
 
         private void timerzwischenzeit_Tick(object sender, EventArgs e)
         {
-            for (int i = 1; i <= 8; i++)
+            if (LetzteZwischenzeitGezeigt + ZwischenZeitAnzeigedauer < DateTime.Now)
             {
-                Panel pan = (Panel)this.Controls["panel_rang" + i];
-                pan.Visible = false;
+                for (int i = 1; i <= 8; i++)
+                {
+                    Panel pan = (Panel)this.Controls["panel_rang" + i];
+                    pan.Visible = false;
+                }
             }
-            timerzwischenzeit.Stop();
         }
     }
 }

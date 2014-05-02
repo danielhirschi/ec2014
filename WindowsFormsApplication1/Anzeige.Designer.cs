@@ -451,7 +451,7 @@
             // 
             // timerzwischenzeit
             // 
-            this.timerzwischenzeit.Interval = 5000;
+            this.timerzwischenzeit.Interval = 500;
             this.timerzwischenzeit.Tick += new System.EventHandler(this.timerzwischenzeit_Tick);
             // 
             // lblRemark

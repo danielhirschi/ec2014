@@ -15,19 +15,27 @@ namespace WindowsFormsApplication1
     {
         //Original Logo Grösse = 1181;1207
         //Farbe Logo 0;94;157
-        Anzeige FormAnzeige = new Anzeige();
-        Scoreboard FormScoreboard = new Scoreboard();
+        private readonly Anzeige FormAnzeige = new Anzeige();
+        private readonly Scoreboard FormScoreboard = new Scoreboard();
 
-        protected TimeSpan Zeit { get; set; }
+        protected DateTime? StartZeit { get; set; }
         protected int Rang { get; set; }
         protected bool IsBindWithScoreboard { get; set; }
 
         public Master()
         {
             InitializeComponent();
-            Zeit = new TimeSpan(0);
+            StartZeit = null;
             Rang = 1;
             IsBindWithScoreboard = false;
+            
+        }
+
+        private void timerzeit_Tick(object sender, EventArgs e)
+        {
+            if (IsBindWithScoreboard) return;
+            lbl_zeit.Text = StartZeit == null ? (new TimeSpan()).ToString(@"mm\:ss\.f") : (DateTime.Now - StartZeit.Value).ToString(@"mm\:ss\.f");
+            FormAnzeige.SetZeit(lbl_zeit.Text);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -49,8 +57,8 @@ namespace WindowsFormsApplication1
         {
             FormAnzeige.Show(this);
             FormScoreboard.Show();
+            timerzeit.Start();
             timeruhr.Start();
-            lbl_zeit.Text = Zeit.ToString(@"mm\:ss\.f");
             txt_lauf_TextChanged(sender, e);
             txt_rennen_TextChanged(sender, e);
             textBox2_TextChanged(sender, e);
@@ -100,20 +108,10 @@ namespace WindowsFormsApplication1
 
         private void but_zeit_Click(object sender, EventArgs e)
         {
-            timerzeit.Start();
-            if (int.Parse(textBox_statusdauer.Text) > 0)
-            {
-                timerstatus.Interval = int.Parse(textBox_statusdauer.Text);
-                timerstatus.Start();
-
-            }
+            StartZeit = DateTime.Now;
         }
 
-        private void timerzeit_Tick(object sender, EventArgs e)
-        {
-            Zeit = Zeit + new TimeSpan(0,0,0,0,100);
-            lbl_zeit.Text = Zeit.ToString(@"mm\:ss\.f");
-        }
+
 
 
 
@@ -131,21 +129,11 @@ namespace WindowsFormsApplication1
                 but_sponsoren.Text = "Sponsoren Stoppen";
             }
         }
-        private void sponsorenbeendet()
-        {
-            but_sponsoren.Text = "Sponsoren Anzeigen";
-        }
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            TimeSpan aktuellezeit = new TimeSpan();
-            aktuellezeit = Zeit;
-            AktualisiereZwischenzeit(Zeit, 1);
-        }
+
 
         private void AktualisiereZwischenzeit(TimeSpan zwischenzeit, int bahn)
         {
-
             Label lbl = (Label)groupBox1.Controls["label_r" + Rang];
             lbl.Text = bahn.ToString() + "   " + zwischenzeit.ToString(@"mm\:ss\.f");
             FormAnzeige.SetZwischenzeitsetzen(lbl.Text, Rang);
@@ -159,47 +147,51 @@ namespace WindowsFormsApplication1
 
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            AktualisiereZwischenzeit(DateTime.Now - StartZeit.Value, 1);
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
-            AktualisiereZwischenzeit(Zeit, 2);
+            AktualisiereZwischenzeit(DateTime.Now - StartZeit.Value, 2);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            AktualisiereZwischenzeit(Zeit, 3);
+            AktualisiereZwischenzeit(DateTime.Now - StartZeit.Value, 3);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            AktualisiereZwischenzeit(Zeit, 4);
+            AktualisiereZwischenzeit(DateTime.Now - StartZeit.Value, 4);
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            AktualisiereZwischenzeit(Zeit, 5);
+            AktualisiereZwischenzeit(DateTime.Now - StartZeit.Value, 5);
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            AktualisiereZwischenzeit(Zeit, 6);
+            AktualisiereZwischenzeit(DateTime.Now - StartZeit.Value, 6);
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            AktualisiereZwischenzeit(Zeit, 7);
+            AktualisiereZwischenzeit(DateTime.Now - StartZeit.Value, 7);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            AktualisiereZwischenzeit(Zeit, 8);
+            AktualisiereZwischenzeit(DateTime.Now - StartZeit.Value, 8);
         }
 
 
 
         private void button10_Click(object sender, EventArgs e)
         {
-            timerzeit.Stop();
-            Zeit = new TimeSpan(0);
+            StartZeit = null;
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -246,13 +238,6 @@ namespace WindowsFormsApplication1
         {
             FormAnzeige.ShowStatus = false;
             timerstatus.Stop();
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-            FormAnzeige.ShowStatus = true;
-            Zeit = new TimeSpan(0);
-            lbl_zeit.Text = Zeit.ToString(@"mm\:ss\.f");
         }
 
         private void butBindWithScoreboard_Click(object sender, EventArgs e)

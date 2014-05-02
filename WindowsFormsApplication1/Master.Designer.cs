@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.bu_Logo = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button13 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.textBox_statusdauer = new System.Windows.Forms.TextBox();
@@ -109,7 +108,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button13);
             this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.textBox_statusdauer);
@@ -158,16 +156,6 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Schwimmen";
-            // 
-            // button13
-            // 
-            this.button13.Location = new System.Drawing.Point(221, 128);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(177, 34);
-            this.button13.TabIndex = 37;
-            this.button13.Text = "Zeit Reset";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // textBox2
             // 
@@ -774,7 +762,6 @@
         private System.Windows.Forms.TextBox textBox_statusdauer;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Timer timerstatus;
-        private System.Windows.Forms.Button button13;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button butBindWithScoreboard;
         private System.Windows.Forms.Button button14;
