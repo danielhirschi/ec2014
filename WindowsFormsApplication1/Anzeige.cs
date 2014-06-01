@@ -35,7 +35,7 @@ namespace WindowsFormsApplication1
 
         public bool IsShowSponsoren()
         {
-            return timersponsoren.Enabled;
+            return timersponsoren.Enabled || timerSponsorenPause.Enabled;
         }
 
         public bool ShowStatus
@@ -78,10 +78,11 @@ namespace WindowsFormsApplication1
         string[] images;
         int imagesn;
         int imagesmax;
-        public void ShowSponsoren(bool show, int interval)
+        public void ShowSponsoren(bool show, int interval, int pauseinterval)
         {
             if (show)
             {
+                timerSponsorenPause.Interval = pauseinterval;
                 imagesn = 0;
                 images = Directory.GetFiles(@".\Sponsoren", "*.png");
                 imagesmax = images.Count();
@@ -92,6 +93,7 @@ namespace WindowsFormsApplication1
             }
             else
             {
+                timerSponsorenPause.Stop();
                 timersponsoren.Stop();
                 panel_sponsoren.Visible = false;
             }
@@ -104,11 +106,23 @@ namespace WindowsFormsApplication1
             {
                 panel_sponsoren.Visible = false;
                 timersponsoren.Stop();
+                timerSponsorenPause.Start();
             }
             else
             {
                 pictureBox_Sponsoren.Image = Image.FromFile(images[imagesn]);
             }
+        }
+
+        private void timerSponsorenPause_Tick(object sender, EventArgs e)
+        {
+            timerSponsorenPause.Stop();
+            imagesn = 0;
+            images = Directory.GetFiles(@".\Sponsoren", "*.png");
+            imagesmax = images.Count();
+            pictureBox_Sponsoren.Image = Image.FromFile(images[imagesn]);
+            panel_sponsoren.Visible = true;
+            timersponsoren.Start();
         }
 
         //Uhr
@@ -173,5 +187,30 @@ namespace WindowsFormsApplication1
                 }
             }
         }
+
+        //Lanes
+        public void SetLanes(List<string> orderedLanes)
+        {
+            for (int i = 0; i < AnzahlBahnen; i++)
+            {
+                Panel pan = (Panel) Controls["pnlLane" + (i + 1)];
+                Label lbl = (Label) pan.Controls["lblLane" + (i + 1)];
+                lbl.Text = i+1 + ": " + orderedLanes[i];
+                pan.Visible = true;
+            }
+            timerLanes.Start();
+        }
+
+        private void timerLanes_Tick(object sender, EventArgs e)
+        {
+            timerLanes.Stop();
+            for (int i = 0; i < AnzahlBahnen; i++)
+            {
+                Panel pan = (Panel) Controls["pnlLane" + (i + 1)];
+                pan.Visible = false;
+            }
+        }
+
+ 
     }
 }

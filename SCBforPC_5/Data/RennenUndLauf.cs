@@ -11,7 +11,14 @@ namespace SCEG.ScoreboardPc.Data
 
         public int RennenNr { get; set; }
         public int LaufNr { get; set; }
-        
+
+
+        public RennenUndLauf()
+            : base(new List<byte>())
+        {
+            
+        }
+
         public RennenUndLauf(List<byte> command)
             : base(command)
         {

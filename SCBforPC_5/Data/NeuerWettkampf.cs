@@ -9,6 +9,7 @@ namespace SCEG.ScoreboardPc.Data
     {
         private const byte NeuerWettkampferkkenungsByte = 0x53;
 
+
         public NeuerWettkampf(List<byte> command)
             : base(command)
         {

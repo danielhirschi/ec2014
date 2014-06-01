@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using MeetManagerConnection;
 using SCEG.ScoreboardPc.Data;
 using SCEG.ScoreboardPc.View;
 
@@ -18,10 +19,12 @@ namespace WindowsFormsApplication1
         //Farbe Logo 0;94;157
         private readonly Anzeige FormAnzeige = new Anzeige();
         private readonly Scoreboard FormScoreboard = new Scoreboard();
+        private readonly TestDb FormMeetManager = new TestDb();
 
         protected DateTime? StartZeit { get; set; }
         protected int Rang { get; set; }
         protected bool IsBindWithScoreboard { get; set; }
+        protected bool IsBindWithDb { get; set; }
         public int AnzahlBahnen { get; set; }
 
         public Master()
@@ -60,6 +63,7 @@ namespace WindowsFormsApplication1
         {
             FormAnzeige.Show(this);
             FormScoreboard.Show();
+            FormMeetManager.Show();
             timerzeit.Start();
             timeruhr.Start();
             txt_lauf_TextChanged(sender, e);
@@ -123,12 +127,12 @@ namespace WindowsFormsApplication1
         {
             if (FormAnzeige.IsShowSponsoren())
             {
-                FormAnzeige.ShowSponsoren(false, int.Parse(textBox_sponor_interval.Text));
+                FormAnzeige.ShowSponsoren(false, int.Parse(textBox_sponor_interval.Text), int.Parse(txtPausdauer.Text));
                 but_sponsoren.Text = "Sponsoren Anzeigen";
             }
             else
             {
-                FormAnzeige.ShowSponsoren(true, int.Parse(textBox_sponor_interval.Text));
+                FormAnzeige.ShowSponsoren(true, int.Parse(textBox_sponor_interval.Text), int.Parse(txtPausdauer.Text));
                 but_sponsoren.Text = "Sponsoren Stoppen";
             }
         }
@@ -276,12 +280,30 @@ namespace WindowsFormsApplication1
                 var com = (RennenUndLauf)aresCommand;
                 FormAnzeige.SetRennen(com.RennenNr.ToString(CultureInfo.CurrentUICulture));
                 FormAnzeige.SetLauf(com.LaufNr.ToString(CultureInfo.CurrentUICulture));
+                if (IsBindWithDb)
+                {
+                    List<AthleteFromData> athletes = FormMeetManager.GetAthleteFrom(com.RennenNr, com.LaufNr);
+                    List<string> orderedLanes = new List<string>();
+                    for (int i = 0; i < 8; i++)
+                    {
+                        var athlete = athletes.FirstOrDefault(l => l.SwimresultLane == i+1);
+                        if (athlete == null)
+                        {
+                            orderedLanes.Add("");
+                        }
+                        else
+                        {
+                            orderedLanes.Add(athlete.ClubCode + " | " + athlete.AthleteFirstname + " " + athlete.AthleteLastname);
+                        }
+                    }
+                    FormAnzeige.SetLanes(orderedLanes);
+                }
             }
             else if (aresCommand is BahnInfo)
             {
                 var spec = (BahnInfo)aresCommand;
 
-                if (spec.Rang <= AnzahlBahnen)
+                if (spec.Rang <= AnzahlBahnen && spec.BahnNr <= AnzahlBahnen)
                 {
                     if (spec.Loeschen)
                     {
@@ -289,7 +311,7 @@ namespace WindowsFormsApplication1
                     }
                     else
                     {
-                        FormAnzeige.SetZwischenzeitsetzen(spec.BahnNr.ToString(CultureInfo.CurrentCulture) + " " + String.Format("{0:hh\\:mm\\:ss\\:ff}", spec.Time), spec.Rang);
+                        FormAnzeige.SetZwischenzeitsetzen(spec.BahnNr.ToString(CultureInfo.CurrentCulture) + " " + String.Format("{0:mm\\:ss\\:ff}", spec.Time), spec.Rang);
                     }
                 }
             }
@@ -328,6 +350,28 @@ namespace WindowsFormsApplication1
                 FormAnzeige.ShowRemark = true;
                 butRemark.Text = "Remark ausblenden";
             }
+        }
+
+        private void butBindWithDb_Click(object sender, EventArgs e)
+        {
+            if (!IsBindWithScoreboard) return;
+            if (FormMeetManager == null || FormMeetManager.IsDisposed) return;
+            if (IsBindWithDb)
+            {
+                IsBindWithDb = false;
+                butBindWithDb.Text = "Mit db binden";
+            }
+            else
+            {
+                IsBindWithDb = true;
+                butBindWithDb.Text = "Mit db trennen";
+
+            }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            FormScoreboardOnAresCommandIcoming(this, new RennenUndLauf() { LaufNr = 1, RennenNr = 1});
         }
 
  

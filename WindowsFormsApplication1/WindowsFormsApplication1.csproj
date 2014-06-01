@@ -95,10 +95,8 @@
     <None Include="Resources\Zeit.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Zeitlang.png" />
     <Content Include="Sponsoren\Aquafun.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sponsoren\Baloise.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Sponsoren\Raifeisen.png">
@@ -106,6 +104,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MeetManagerConnection\MeetManagerConnection.csproj">
+      <Project>{0C7C1DFD-0875-4E1D-958F-DECEB69A6112}</Project>
+      <Name>MeetManagerConnection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SCBforPC_5\SCBforPC_5.csproj">
       <Project>{844D2BBD-8C42-4179-9C57-B324F1FEDA77}</Project>
       <Name>SCBforPC_5</Name>
